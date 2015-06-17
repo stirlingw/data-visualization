@@ -138,19 +138,36 @@
         font-weight: bold;
     }
 
+    /*stockquote*/
+    body { font: 12px Arial;}
+
+    path {
+        stroke: steelblue;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: grey;
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
+
 </style>
 
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
+        < class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
             <div style="margin-top: 60px">
                 <h1>Stock Quote Look Up</h1>
                 <input type="text" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
                 <i ng-show="loadingStocks" class="glyphicon glyphicon-refresh"></i>
                 <br/><br/>
             </div>
-            <div><yahoo-stock-quote-directive></yahoo-stock-quote-directive></div>
+
             <tabset justified="true" style="margin-top: 10px">
                 <tab heading="Markit On Demand">
                     <div>
@@ -390,7 +407,7 @@
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <pre>{{YSC}}</pre>
+                        <yahoo-stock-quote-directive></yahoo-stock-quote-directive>
                     </div>
                 </tab>
             </tabset>

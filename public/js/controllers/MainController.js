@@ -31,10 +31,10 @@ visualization.controller('MainController', ['$scope', '$rootScope', 'MarkItServi
         $scope.selectedStock = function(model){
             $scope.stockInfo = model;
 
-            /*MarkItService.getStockQuote(model.symbol)
+            MarkItService.getStockQuote(model.symbol)
                 .then(function(data){
                     $scope.symbolQuote = data.data;
-                });*/
+                });
             MarkItService.getGoogleStockQuote(model.exchange, model.symbol)
                 .then(function(data){
                     $scope.GSQ = data.data[0];
