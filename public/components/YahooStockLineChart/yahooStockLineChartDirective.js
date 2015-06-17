@@ -1,5 +1,5 @@
 visualization.
-    directive('yahooStockQuoteDirective', function ($http, YahooStockQuoteService) {
+    directive('yahooStockLineChartDirective', function ($http, YahooStockQuoteService) {
         return {
             restrict: 'EA',
             template: "<div id='chart'></div>",
