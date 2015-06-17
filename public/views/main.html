@@ -101,7 +101,7 @@
     .feature {
         /* border-top: 1px dotted #CCC; */
         padding: 0 0 15px 0;
-        margin: 15px 0 0 0;
+        margin: 10px 0 0 0;
     }
 
     .feature {
@@ -115,7 +115,6 @@
         line-height: 1.5;
         color: #666;
         display: table;
-        margin: 0 0 10px 0;
         padding: 0;
     }
 
@@ -160,12 +159,13 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        < class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
+        <div class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
             <div style="margin-top: 60px">
                 <h1>Stock Quote Look Up</h1>
-                <input type="text" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
-                <i ng-show="loadingStocks" class="glyphicon glyphicon-refresh"></i>
-                <br/><br/>
+                <div class="well">
+                    <input type="text" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
+                    <i ng-show="loadingStocks" class="glyphicon glyphicon-refresh"></i>
+                </div>
             </div>
 
             <tabset justified="true" style="margin-top: 10px">
@@ -328,7 +328,7 @@
                     </div>
                 </tab>
                 <tab heading="Yahoo Finance">
-                    <div>
+                    <div class="col-xs-12">
                         <h4>{{stockInfo.name}} Ticker</h4>
                         <div class="module" ng-if="YSQ !== null">
                             <div class="moduleBody">
@@ -398,16 +398,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <h4>Latest News About {{stockInfo.name}}</h4>
-
                         <div class="feature" ng-repeat="news in YSN">
-                            <h2><a ng-href="news.href">{{news.content}}</a></h2>
-                            <p></p>
+                            <strong><a ng-href="news.href">{{news.content}}</a></strong>
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        <yahoo-stock-quote-directive></yahoo-stock-quote-directive>
+                    <div class="col-xs-7">
+                        <div ng-if="stockInfo">
+                        <h4>History</h4>
+                        <yahoo-stock-quote-directive symbol={{stockInfo.symbol}}></yahoo-stock-quote-directive>
+                        </div>
                     </div>
                 </tab>
             </tabset>

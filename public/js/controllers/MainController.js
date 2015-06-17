@@ -50,11 +50,11 @@ visualization.controller('MainController', ['$scope', '$rootScope', 'MarkItServi
                     $scope.YSN = data.data.query.results.a;
                 });
 
-            MarkItService.getYahooStockChart(model.symbol)
+            /*MarkItService.getYahooStockChart(model.symbol)
                 .then(function(data){
                     //console.log(data.data.query.results);
                     $scope.YSC = data.data.query.results.quote;
-                });
+                });*/
         };
     }
 ]);
