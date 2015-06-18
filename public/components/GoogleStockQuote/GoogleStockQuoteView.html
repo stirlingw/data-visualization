@@ -1,64 +1,67 @@
-<div class="module" ng-if="YSQ !== null">
+<div class="module" ng-if="GSQ !== null">
     <div class="moduleBody">
         <div class="headerQuoteContainer">
             <div class="sectionQuote nasdaqChange">
                 <div class="sectionQuoteDetail">
-                    <span class="nasdaqChangeHeader">{{YSQ.symbol}} on {{YSQ.StockExchange}}</span>
+                    <span class="nasdaqChangeHeader">{{GSQ.t}} on {{GSQ.e}}</span>
                     <br class="clear"><br class="clear">
-                    <span style="font-size: 23px;">{{YSQ.LastTradePriceOnly | currency : symbol : 2}}</span><span>USD</span><br>
-                    <span class="nasdaqChangeTime">{{YSQ.utctime | date:'dd-MM-yyyy'}}</span>
+                    <span style="font-size: 23px;">{{GSQ.l_cur | currency : symbol : 3}}</span><span>USD</span><br>
+                    <span class="nasdaqChangeTime">{{GSQ.lt_dts | date:'dd-MM-yyyy'}}</span>
                 </div>
             </div>
             <div class="sectionQuote priceChange">
                 <div class="sectionQuoteDetail">
                     <span class="priceDetail">Change	(% chg)</span>
                     <br class="clear"><br class="clear">
-                                                <span class="valueContent">
-                                                    <span class="neg">{{YSQ.Change}}</span>
-                                                </span>
+                                        <span class="valueContent">
+                                            <span class="neg">{{GSQ.c | number : 4}}</span>
+                                            <span class="valueContentPercent">
+                                                <span class="neg">({{GSQ.cp | number : 4}})</span>
+                                            </span>
+                                        </span>
                 </div>
             </div>
             <div class="sectionQuote">
                 <div class="sectionQuoteDetail">
-                    <span>Market Capitalization</span>
+                    <span>Open</span>
                     <br class="clear">
-                    <span>{{YSQ.MarketCapitalization}}</span>
-                </div>
-            </div>
-            <div class="sectionQuote">
-                <div class="sectionQuoteDetailTop">
-                    <span>Days Range</span>
-                    <br class="clear">
-                    <span class="sectionQuoteDetailHigh">{{YSQ.DaysRange}}</span>
-                </div>
-                <div class="sectionQuoteDetail">
-                    <span>Daily Volume</span>
-                    <br class="clear">
-                    <span>{{YSQ.AverageDailyVolume | number}}</span>
+                    <span>{{GSQ.Open | number}}</span>
                 </div>
             </div>
             <div class="sectionQuote">
                 <div class="sectionQuoteDetailTop">
                     <span>Day's High</span>
                     <br class="clear">
-                    <span class="sectionQuoteDetailHigh">{{YSQ.DaysHigh | currency : symbol : 2}}</span>
+                    <span class="sectionQuoteDetailHigh">{{GSQ.High | number}}</span>
                 </div>
                 <div class="sectionQuoteDetail">
                     <span>Day's Low</span>
                     <br class="clear">
-                    <span class="sectionQuoteDetailLow">{{YSQ.DaysLow | currency : symbol : 2}}</span>
+                    <span class="sectionQuoteDetailLow">{{GSQ.Low | number}}</span>
                 </div>
             </div>
             <div class="sectionQuote">
                 <div class="sectionQuoteDetailTop">
-                    <span>Year High</span>
+                    <span>Volume</span>
                     <br class="clear">
-                    <span class="sectionQuoteDetailHigh">{{YSQ.YearHigh | currency : symbol : 2}}</span>
+                    <span>{{GSQ.Volume | number}}</span>
                 </div>
                 <div class="sectionQuoteDetail">
-                    <span>Year Low</span>
+                    <span>Market Cap</span>
                     <br class="clear">
-                    <span class="sectionQuoteDetailLow">{{YSQ.YearLow | currency : symbol : 2}}</span>
+                    <span>{{GSQ.MarketCap | number}}</span>
+                </div>
+            </div>
+            <div class="sectionQuote">
+                <div class="sectionQuoteDetailTop">
+                    <span>Change YTD</span>
+                    <br class="clear">
+                    <span class="sectionQuoteDetailHigh">{{GSQ.ChangeYTD | number}}</span>
+                </div>
+                <div class="sectionQuoteDetail">
+                    <span>Change % YTD</span>
+                    <br class="clear">
+                    <span class="sectionQuoteDetailLow">{{GSQ.ChangePercentYTD | number : 4}}</span>
                 </div>
             </div>
             <br class="clear">

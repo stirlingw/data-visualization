@@ -1,5 +1,5 @@
 visualization.
-    directive('yahooStockLineChartDirective', function ($http, YahooStockQuoteService) {
+    directive('yahooStockLineChartDirective', function ($http, YahooStockLineChartService) {
         return {
             restrict: 'EA',
             template: "<div id='chart'></div>",
@@ -227,7 +227,7 @@ visualization.
 
                 if(attrs.symbol !== null) {
                     //attrs.symbol.toString()
-                    YahooStockQuoteService.getYahooStockChart('GOOGL', '2009-09-11', '2010-03-10').then(handleThen);
+                    YahooStockLineChartService.getYahooStockChart('GOOGL', '2009-09-11', '2010-03-10').then(handleThen);
                 }
             }
         };
