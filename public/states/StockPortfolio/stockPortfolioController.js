@@ -1,5 +1,5 @@
 visualization.controller('StockPortfolioController', ['$scope', '$rootScope', 'StockPortfolioService', '$http',
-    function($scope, $rootScope, MarkItService, $http) {
+    function($scope, $rootScope, StockPortfolioService,   $http) {
         'use strict';
         //Google Stock Quote
         $scope.GSQ = null;

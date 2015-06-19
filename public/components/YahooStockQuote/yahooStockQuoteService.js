@@ -9,7 +9,7 @@ visualization.service('YahooStockQuoteService', ['$http',
                 .success(function(data){
                     return data;
                 }).error(function(data, status) {
-                    console.info(data);
+                    return data;
                 });
             return promise;
         };

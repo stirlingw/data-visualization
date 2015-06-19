@@ -1,20 +1,23 @@
-visualization.directive('GoogleStockQuoteDirective',['$http', 'GoogleStockQuoteService',function($http, YahooStockQuoteService) {
+visualization.directive('googleStockQuoteDirective',['$http', 'GoogleStockQuoteService', 'StockQuoteService',function($http, GoogleStockQuoteService, StockQuoteService) {
     'use strict';
     return {
         restrict: 'E',
         templateUrl: './components/GoogleStockQuote/googleStockQuoteView.html',
         scope: {},
         replace: true,
-        controller: function(){},
         link: function (scope, element, attrs) {
-            //scope.$watch($root.stockInfo)
-            console.log(scope.$root.stockInfo);
-            if(scope.$parent.$parent.$parent.stockQuote !== undefined) {
-                GoogleStockQuoteService.getGoogleStockQuote(model.exchange, model.symbol)
-                    .then(function(data){
-                        $scope.GSQ = data.data[0];
-                    });
-            }
+            scope.$watch(function () {
+                return StockQuoteService.getStockQuote();
+            },
+            function (quote) {
+                if (quote !== null && typeof quote !== 'undefined') {
+                    GoogleStockQuoteService.getGoogleStockQuote(quote.exchange, quote.symbol)
+                        .then(function(data){
+                            scope.GSQ = data.data[0];
+                            console.log(scope.GSQ);
+                        });
+                }
+            });
         }
     };
 }]);

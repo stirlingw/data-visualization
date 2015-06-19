@@ -8,9 +8,8 @@ visualization.directive('yahooStockNewsDirective',['$http', 'YahooStockQuoteServ
         controller: function(){},
         link: function (scope, element, attrs) {
             //scope.$watch($root.stockInfo)
-            console.log(scope.$root.stockInfo);
             if(scope.$parent.$parent.$parent.stockQuote !== undefined) {
-                MarkItService.getYahooStockNews(model.symbol)
+                YahooStockQuoteService.getYahooStockNews(model.symbol)
                     .then(function(data){
                         //console.log(data.data.query.results.a);
                         $scope.YSN = data.data.query.results.a;

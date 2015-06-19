@@ -2,6 +2,7 @@ visualization.service('StockQuoteService', ['$http','$q',
     function( $http, $q) {
         'use strict';
         var Service = {};
+        var stockQuote = null;
 
         Service.getTypeAhead = function(val){
             var input = 'input='+val+'&callback=JSON_CALLBACK';
@@ -15,6 +16,13 @@ visualization.service('StockQuoteService', ['$http','$q',
             return promise;
         };
 
+        Service.setStockQuote = function(stock){
+            stockQuote = stock;
+        };
+
+        Service.getStockQuote = function(){
+            return stockQuote;
+        };
 
         return Service;
     }

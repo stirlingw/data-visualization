@@ -10,7 +10,6 @@ visualization.directive('yahooStockQuoteDirective',['$http', 'YahooStockQuoteSer
         },
         link: function (scope, element, attrs) {
             //scope.$watch($root.stockInfo)
-            console.log(scope.$root.stockInfo);
             if(scope.$parent.$parent.$parent.stockQuote !== undefined) {
 
                 YahooStockQuoteService.getYahooStockQuote(scope.$parent.$parent.$parent.stockQuote)
