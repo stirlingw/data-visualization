@@ -1,4 +1,4 @@
-visualization.directive('yahooStockNewsDirective',['$http', 'YahooStockQuoteService',function($http, YahooStockQuoteService) {
+visualization.directive('yahooStockNewsDirective',['$http', 'YahooStockNewsService', 'SuperModelService',function($http, YahooStockNewsService, SuperModelService) {
     'use strict';
     return {
         restrict: 'E',
@@ -7,14 +7,17 @@ visualization.directive('yahooStockNewsDirective',['$http', 'YahooStockQuoteServ
         replace: true,
         controller: function(){},
         link: function (scope, element, attrs) {
-            //scope.$watch($root.stockInfo)
-            if(scope.$parent.$parent.$parent.stockQuote !== undefined) {
-                YahooStockQuoteService.getYahooStockNews(model.symbol)
-                    .then(function(data){
-                        //console.log(data.data.query.results.a);
-                        $scope.YSN = data.data.query.results.a;
-                    });
-            }
+            scope.$watch(function () {
+                return SuperModelService.getStockQuote();
+            },
+            function (quote) {
+                if (quote !== null && typeof quote !== 'undefined') {
+                    YahooStockNewsService.getYahooStockNews(quote.symbol)
+                        .then(function(data){
+                            scope.YSN = data.data.query.results.a;
+                        });
+                }
+            });
         }
     };
 }]);

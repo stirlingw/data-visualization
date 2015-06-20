@@ -1,11 +1,12 @@
-visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'StockQuoteService', '$http',
-    function($scope, $rootScope, StockQuoteService, $http) {
+visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'SuperModelService', 'StockQuoteService', '$http', '$q',
+    function($scope, $rootScope, SuperModelService, StockQuoteService, $http, $q) {
         'use strict';
         //Google Stock Quote
         $scope.GSQ = null;
         $scope.YSQ = null;
         $scope.YSN = null;
         $scope.symbolQuote = null;
+
 
 
         $scope.getStock = function(val) {
@@ -22,10 +23,12 @@ visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'Stock
             });
         };
 
+        //$scope.getStock('APPL');
+
         $scope.selectedStock = function(model){
             $rootScope.stockInfo = model;
-
-            StockQuoteService.setStockQuote(model);
+            SuperModelService.setStockQuote(model);
+            $scope.stock = null;
 
             /*MarkItService.getStockQuote(model.symbol)
              .then(function(data){

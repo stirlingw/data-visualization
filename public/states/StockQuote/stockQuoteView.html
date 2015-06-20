@@ -33,6 +33,9 @@
     .priceChange {
         width: 152px !important;
     }
+    .googlePriceChange{
+        width: 254px !important;
+    }
 
     .priceDetail {
         font-size: 11px;
@@ -47,6 +50,16 @@
         width: 127px;
         height: 85px;
     }
+
+    .googleSectionQuote{
+        float:left;
+        border-left: 1px solid #CCCCCC;
+        margin-right:10px;
+        padding-left: 10px;
+        width: 264px;
+        height: 85px;
+    }
+
     /*.sectionQuoteDetailTop {*/
     .sectionQuoteDetailTop {
         border-bottom: 1px dotted #CCCCCC;
@@ -157,41 +170,42 @@
 </style>
 
 <!-- Main Content -->
-<div class="container">
+<div class="container" style="margin-bottom: 60px;">
     <div class="row">
-        <div class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
-            <div style="margin-top: 60px">
+        <div class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1"  >
+            <div style="margin-top: 60px; margin-bottom: 60px;" class="col-xs-12">
                 <h1>Stock Quote Look Up</h1>
                 <div class="well">
                     <input type="text" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
                     <i ng-show="loadingStocks" class="glyphicon glyphicon-refresh"></i>
                 </div>
             </div>
-            <div>
-                <h4>Markit On Demand Ticker</h4>
-                <pre>{{symbolQuote}}</pre>
-                <mark-it-stock-quote-directive></mark-it-stock-quote-directive>
-            </div>
-            <!-- / Mark It On Demand -->
-
-            <div style="margin-top: 60px">
+            <div class="col-xs-12">
                 <h4>Google Finance Ticker</h4>
-                <pre>{{GSQ}}</pre>
                 <google-stock-quote-directive></google-stock-quote-directive>
             </div>
             <!-- // End Google Finance  -->
             <div class="col-xs-12">
+                <h4>Markit On Demand Ticker</h4>
+                <mark-it-stock-quote-directive></mark-it-stock-quote-directive>
+            </div>
+            <!-- / Mark It On Demand -->
+            <div class="col-xs-12">
                 <h4>Yahoo Finance Ticker</h4>
-                <yahoo-stock-quote-directive symbol="{{stockInfo}}"></yahoo-stock-quote-directive>
+                <yahoo-stock-quote-directive></yahoo-stock-quote-directive>
             </div>
-            <div class="col-xs-5">
-                <h4>Latest News About {{stockInfo.name}}</h4>
-                <yahoo-stock-news-directive></yahoo-stock-news-directive>
-            </div>
-            <div class="col-xs-7">
-                <div ng-if="stockInfo">
+            <div class="col-xs-12">
+                <div class="col-xs-5">
+                    <h4>Latest News About {{stockInfo.name}}</h4>
+                    <yahoo-stock-news-directive></yahoo-stock-news-directive>
+                </div>
+                <div class="col-xs-7">
                     <h4>History</h4>
-                    <yahoo-stock-line-chart-directive symbol={{stockInfo}}></yahoo-stock-line-chart-directive>
+                    <yahoo-stock-line-chart-directive></yahoo-stock-line-chart-directive>
+                </div>
+                <div class="col-xs-7">
+                    <h4>History</h4>
+                    hi hi hi
                 </div>
             </div>
         </div>

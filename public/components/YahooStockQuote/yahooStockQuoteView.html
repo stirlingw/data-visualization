@@ -1,4 +1,4 @@
-<div class="module" ng-if="YSQ !== null">
+<div class="module">
     <div class="moduleBody">
         <div class="headerQuoteContainer">
             <div class="sectionQuote nasdaqChange">
@@ -13,9 +13,9 @@
                 <div class="sectionQuoteDetail">
                     <span class="priceDetail">Change	(% chg)</span>
                     <br class="clear"><br class="clear">
-                                                <span class="valueContent">
-                                                    <span class="neg">{{YSQ.Change}}</span>
-                                                </span>
+                    <span class="valueContent">
+                        <span ng-class="{'neg': YSQ.Change.includes('-') == true, 'pos': YSQ.Change.includes('-') !== true }">{{YSQ.Change}}</span>
+                    </span>
                 </div>
             </div>
             <div class="sectionQuote">

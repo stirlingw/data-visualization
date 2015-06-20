@@ -1,16 +1,16 @@
 visualization.
-    directive('yahooStockLineChartDirective', function ($http, YahooStockLineChartService) {
+    directive('yahooStockLineChartDirective', function ($http, YahooStockLineChartService, SuperModelService) {
         return {
             restrict: 'EA',
             template: "<div id='chart'></div>",
             link: function (scope, element, attrs) {
                 // Chart taken from
                 // http://codepen.io/stirlingw/pen/gpxdmy?editors=100
-
+                var stockQuote = null;
                 var handleThen = function(newData, status) {
                     if(newData.data.query.results !== null) {
                         var data = newData.data.query.results.quote;
-                        var stock = "GOOGL";
+                        var stock = stockQuote.name;
                         var parseDate = d3.time.format("%Y-%m-%d").parse,
                             formatDate = d3.time.format("%d-%b"),
                             bisectDate = d3.bisector(function (d) { return d.date; }).left;
@@ -69,14 +69,7 @@ visualization.
                             svg.append("g")//Y Axis
                                 .attr("class", "y axis")
                                 .call(yAxis);
-                            svg.append("text")//label
-                                .attr("class", "label")
-                                .attr("transform", "translate(" + (width + 3) + ","
-                                + y(_D[0].close) + ")")
-                                .attr("dy", ".35em")
-                                .attr("text-anchor", "start")
-                                .style("fill", "steelblue")
-                                .text("close");
+
 
                             svg.append("text")//title shadow
                                 .attr("x", (width / 2))
@@ -206,13 +199,13 @@ visualization.
                         function createGraph(ifCreate) {
                             if (ifCreate) {
                                 var chartProperties = {
-                                    width: 600,
+                                    width: 550,
                                     height: 270,
                                     margins: {
                                         top: 30,
                                         right: 40,
                                         bottom: 30,
-                                        left: 60
+                                        left: 10
                                     },
                                     xticks: 5,
                                     yticks: 5,
@@ -225,10 +218,15 @@ visualization.
                     }
                 };
 
-                if(attrs.symbol !== null) {
-                    //attrs.symbol.toString()
-                    YahooStockLineChartService.getYahooStockChart('GOOGL', '2009-09-11', '2010-03-10').then(handleThen);
-                }
+                scope.$watch(function () {
+                    return SuperModelService.getStockQuote();
+                },
+                function (quote) {
+                    if (quote !== null && typeof quote !== 'undefined') {
+                        stockQuote = quote;
+                        YahooStockLineChartService.getYahooStockChart(quote.symbol, '2009-09-11', '2010-03-10').then(handleThen);
+                    }
+                });
             }
         };
     });

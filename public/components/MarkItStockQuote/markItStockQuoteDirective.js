@@ -1,4 +1,4 @@
-visualization.directive('markItStockQuoteDirective',['$http', 'MarkItStockQuoteService',function($http, MarkItStockQuoteService) {
+visualization.directive('markItStockQuoteDirective',['$http', 'MarkItStockQuoteService','SuperModelService',function($http, MarkItStockQuoteService, SuperModelService) {
     'use strict';
     return {
         restrict: 'E',
@@ -7,14 +7,18 @@ visualization.directive('markItStockQuoteDirective',['$http', 'MarkItStockQuoteS
         replace: true,
         controller: function(){},
         link: function (scope, element, attrs) {
-            //scope.$watch($root.stockInfo)
-            //console.log(scope.$root.stockInfo);
-            //if(scope.$parent.$parent.$parent.stockQuote !== undefined) {
-                /*MarkItStockQuoteService.getMarkItStockQuote(model.exchange, model.symbol)
-                    .then(function(data){
-                        $scope.GSQ = data.data[0];
-                    });*/
-            //}
+            scope.$watch(function () {
+                return SuperModelService.getStockQuote();
+            },
+            function (quote) {
+                if (quote !== null && typeof quote !== 'undefined') {
+                    MarkItStockQuoteService.getMarkItStockQuote(quote.symbol)
+                        .then(function(data){
+                            scope.MSQ = data.data;
+                            scope.stock = quote;
+                        });
+                }
+            });
         }
     };
 }]);

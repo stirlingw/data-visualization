@@ -1,3 +1,4 @@
+
 visualization.service('YahooStockQuoteService', ['$http',
     function($http) {
         'use strict';
