@@ -209,10 +209,10 @@ visualization.
                                     width: 550,
                                     height: 270,
                                     margins: {
-                                        top: 30,
-                                        right: 40,
+                                        top: 15,
+                                        right: 20,
                                         bottom: 30,
-                                        left: 10
+                                        left: 30
                                     },
                                     xticks: 5,
                                     yticks: 5,
@@ -231,8 +231,30 @@ visualization.
                 function (quote) {
                     if (quote !== null && typeof quote !== 'undefined') {
 
+                        var range = '1w';
+                        var today = moment().format('YYYY-MM-DD');
+                        var history = null;
                         stockQuote = quote;
-                        YahooStockLineChartService.getYahooStockChart(quote.symbol, '2009-09-11', '2010-03-10').then(handleThen);
+
+                        if (range === '1w')
+                            history = moment().subtract(7, 'days').format('YYYY-MM-DD');
+
+                        if (range === '1m')
+                            history = moment().subtract(1, 'month').format('YYYY-MM-DD');
+
+                        if (range === '3m')
+                            history = moment().subtract(3, 'months').format('YYYY-MM-DD');
+
+                        if (range === '6m')
+                            history = moment().subtract(6, 'months').format('YYYY-MM-DD');
+
+                        if (range === '1y')
+                            history = moment().subtract(1, 'years').format('YYYY-MM-DD');
+
+                        if (range === '5y')
+                            history = moment().subtract(5, 'years').format('YYYY-MM-DD');
+
+                        YahooStockLineChartService.getYahooStockChart(quote.symbol, history, today).then(handleThen);
                     }
                 });
             }

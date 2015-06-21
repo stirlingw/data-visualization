@@ -31,9 +31,8 @@ visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'Super
             return Stocks;
         };
 
-
         $scope.selectedStock = function(model){
-            $rootScope.stockInfo = model;
+            $scope.stockInfo = model;
             SuperModelService.setStockQuote(model);
         };
     }

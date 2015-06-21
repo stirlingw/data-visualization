@@ -6,7 +6,6 @@ visualization.directive('googleStockQuoteDirective',['$http', 'GoogleStockQuoteS
         scope: true,
         replace: true,
         link: function (scope, element, attrs) {
-            console.log(scope.$parent.$parentp);
             scope.$watch(function () {
                 return SuperModelService.getStockQuote();
             },

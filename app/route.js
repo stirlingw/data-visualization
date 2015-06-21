@@ -28,5 +28,9 @@ module.exports = function(app) {
         res.sendfile('./public/components/YahooStockNews/yahooStockNewsView.html');
     });
 
+    app.get('/wikiSummaryView.html', function(req, res) {
+        res.sendfile('./public/components/WikiSummary/wikiSummaryView.html');
+    });
+
 
 };
