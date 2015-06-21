@@ -1,105 +1,105 @@
-<style>
-    @import url(http://fonts.googleapis.com/css?family=Open+Sans:700,300);
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-    }
-    body {
-        margin: 0;
-        overflow: hidden;
-        font-family: 'Open Sans', sans-serif;
-        background-color: #f0f0f0;
-    }
-    .container {
-        width: 640px;
-        padding: 5px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .stock {
-        width: 150px;
-        height: 150px;
-        background-color: #CCC;
-        position: relative;
-        float: left;
-        margin: 5px;
-        transition: box-shadow 0.2s ease;
-    }
-    .stock:hover {
-        box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.15);
-    }
-    .stock .symbol,
-    .stock .change {
-        position: absolute;
-        left: 0;
-        right: 0;
-        text-align: center;
-        color: #fff;
-    }
-    .stock .symbol {
-        top: 10px;
-        text-transform: uppercase;
-        font-size: 12px;
-        font-weight: 300;
-    }
-    .stock .change {
-        top: 50%;
-        font-size: 22px;
-        font-weight: 700;
-        transform: translateY(-50%);
-    }
+<!-- Start Page Header -->
+<div class="page-header">
+    <h1>Stock Portfolio</h1>
 
-
-
-</style>
-
-<div class="portfolio">
-    <div style="margin-top: 60px;">Stock Portfolio</div>
-
-    <div class="container">
-
-        <div class="stock" id="stock-1">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
+    <p class="lead">
+        Start with clicking <button class="btn btn-xs btn-primary" disabled><span class= "glyphicon glyphicon-plus"></span> Add Stock</button>
+        to add a stock to your portfolio
+    </p>
+</div>
+<!-- End Page Header -->
+<div class="row well">
+    <!-- Start Side Div -->
+    <div class="col-xs-7">
+        <div class='input-group'>
+            <input class="form-control" type="text" ng-model="search.$">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="button" disabled>
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
         </div>
-
-        <div class="stock" id="stock-2">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-3">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-4">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-5">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-6">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-7">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
-        <div class="stock" id="stock-8">
-            <span class="symbol">unknown</span>
-            <span class="change">0.00%</span>
-        </div>
-
     </div>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-3">
+        <a class="btn btn-block btn-primary" data-target="#basicModal" data-toggle="modal" href="#"><span class="glyphicon glyphicon-plus"></span> Add Stock </a>
+    </div>
+    <!-- End Side Div -->
+</div>
+<!-- Start Row -->
+<div class="row">
+    <!-- Start Person Table -->
+    <div class="container col-xs-12">
+        <table class="table table-striped col-xs-12" id="searchObjResults">
+            <tr>
+                <th>Name</th>
+                <th>Stock</th>
+                <th>Exchange</th>
+                <th>BA</th>
+                <th>CV</th>
+                <th>Shares</th>
+                <th>SPV</th>
+                <th>SP %</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="s in stocks.stocks | filter:search:strict">
+                <td>{{s.name}}</td>
+                <td>{{s.symbol}}</td>
+                <td>{{s.exchange}}</td>
+                <td>{{s.purchased_value | currency}}</td>
+                <td>{{s.current_value | currency}}</td>
+                <td>{{s.shares | number}}</td>
+                <td>{{s.current_value * s.shares - s.purchased_value * s.shares | currency}}</td>
+                <td>{{s.shares * 100  / stocks.shareSum  }}%</td>
+                <td class="col-xs-2">
+                    <button class="btn btn-danger btn-sm" type="button" ng-click="removePerson($index)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                </td>
+            </tr>
+            <tr><td colspan="4" ng-show='stocks.stocks.length == 0'>No people listed...</td></tr>
+            <tr><td colspan="4" ng-show='stocks.stocks == undefined'>Loading...</td></tr>
+        </table>
+        <table>
+            <tr>
+                <td>Legend - PV: Purchased Value, CV: Current Value, SPV: Stock Portfolio Value, SP%: Stock Portfolio %</td>
+            </tr>
+        </table>
+    </div>
+    <!-- End Person Table -->
+</div>
+<!-- End Row -->
+<!-- Start Modal Window -->
+<div class="modal fade modal-dialog modal-content" id="basicModal" tabindex="-1">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add Person</h4>
+    </div>
+    <!-- Start Form -->
+    <div ng-form class="form-horizontal" id="css" role="form" name="personForm">
+        <div class="modal-body">
+            <!-- Start Name -->
+            <div class="form-group" ng-class="{ 'has-error' : errors.form_error == true && personForm.name.$invalid == true }">
+                <label class="col-sm-2 control-label" for="name">Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="name" name="name" ng-model="form.name" placeholder="Name" type="text" required >
+                    <span class="help-block error" ng-show="errors.form_error == true && personForm.name.$invalid == true">Please input a valid name</span>
+                </div>
+            </div>
+            <!-- End Name -->
+            <!-- Start Email -->
+            <div class="form-group" ng-class="{ 'has-error' : (errors.form_error == true && personForm.email.$invalid == true) || (errors.form_error == true && errors.email == true) }">
+                <label class="col-sm-2 control-label" for="email">Email</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="email" name="email" ng-model="form.email" ng-pattern="email_regexp" placeholder="Email" type="email" required>
+                    <span class="help-block error" ng-show="errors.form_error == true && personForm.email.$invalid && errors.email != true">Please input a valid email address (username@email.com)</span>
+                    <span class="help-block error" ng-show="errors.form_error == true && errors.email == true">The email address you provided is already in the system. Please input a different email or contact your system admin.</span>
+                </div>
+            </div>
+            <!-- End Email -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+            <button class="btn btn-success" type="button" ng-click="submitForm(form)">Submit</button>
+        </div>
+    </div>
+    <!-- End Form -->
 </div>

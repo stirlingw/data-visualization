@@ -32,5 +32,7 @@ visualization.controller('StockPortfolioController', ['$scope', '$rootScope', 'S
             }
         });
 
+        $scope.stocks = StockPortfolioService.getStockPortfolio();
+        console.log($scope.stocks);
     }
 ]);
