@@ -1,56 +1,40 @@
-visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'SuperModelService', 'StockQuoteService', '$http', '$q',
-    function($scope, $rootScope, SuperModelService, StockQuoteService, $http, $q) {
+visualization.controller('StockQuoteController', ['$scope', '$rootScope', 'SuperModelService', 'StockQuoteService', '$http', '$q', '$timeout',
+    function($scope, $rootScope, SuperModelService, StockQuoteService, $http, $q, $timeout) {
         'use strict';
         //Google Stock Quote
         $scope.GSQ = null;
         $scope.YSQ = null;
         $scope.YSN = null;
         $scope.symbolQuote = null;
+        $scope.stockInfo = undefined;
 
-
-
+        var Stocks = [];
         $scope.getStock = function(val) {
-            var input = 'input='+val+'&callback=JSON_CALLBACK'
-            return $http.jsonp('http://dev.markitondemand.com/api/v2/Lookup/jsonp?' + input).then(function(response){
-                return response.data.map(function(item){
+            var url = [
+                "http://d.yimg.com/autoc.finance.yahoo.com/autoc?",
+                "query=" + val,
+                "&callback=YAHOO.Finance.SymbolSuggest.ssCallback"];
+            var YAHOO = window.YAHOO = {Finance: {SymbolSuggest: {}}};
+            YAHOO.Finance.SymbolSuggest.ssCallback = function(response) {
+                function returnMap(item) {
                     return {
-                        label: item.Name + " - " + item.Symbol + " (" +item.Exchange+ ")",
-                        name: item.Name,
-                        symbol: item.Symbol,
-                        exchange: item.Exchange
-                    }
-                });
-            });
+                        label: item.name + " - " + item.symbol + " (" + item.exchDisp + ")",
+                        name: item.name,
+                        symbol: item.symbol,
+                        exchange: item.exch
+                    };
+                }
+                Stocks = response.ResultSet.Result.map(returnMap);
+            };
+            $http.jsonp(url.join(""));
+
+            return Stocks;
         };
 
-        //$scope.getStock('APPL');
 
         $scope.selectedStock = function(model){
             $rootScope.stockInfo = model;
             SuperModelService.setStockQuote(model);
-            $scope.stock = null;
-
-            /*MarkItService.getStockQuote(model.symbol)
-             .then(function(data){
-             $scope.symbolQuote = data.data;
-             });
-
-             MarkItService.getYahooStockQuote(model.symbol)
-             .then(function(data){
-             $scope.YSQ = data.data.query.results.quote;
-             });
-
-             MarkItService.getYahooStockNews(model.symbol)
-             .then(function(data){
-             //console.log(data.data.query.results.a);
-             $scope.YSN = data.data.query.results.a;
-             });
-
-             MarkItService.getYahooStockChart(model.symbol)
-             .then(function(data){
-             //console.log(data.data.query.results);
-             $scope.YSC = data.data.query.results.quote;
-             });*/
         };
     }
 ]);

@@ -4,6 +4,7 @@ visualization.
             restrict: 'EA',
             template: "<div id='chart'></div>",
             link: function (scope, element, attrs) {
+
                 // Chart taken from
                 // http://codepen.io/stirlingw/pen/gpxdmy?editors=100
                 var stockQuote = null;
@@ -28,6 +29,12 @@ visualization.
                                 valueline = d3.svg.line()
                                     .x(function (d) { return x(d.date); })
                                     .y(function (d) { return y(d.close); });
+
+                            var svgtest = d3.select('#chart'+" > svg");
+                            if(!svgtest.empty())
+                            {
+                                $('#chart'+" > svg").remove();
+                            }
 
                             var svg = d3.select("#chart")
                                 .append("svg")
@@ -223,6 +230,7 @@ visualization.
                 },
                 function (quote) {
                     if (quote !== null && typeof quote !== 'undefined') {
+
                         stockQuote = quote;
                         YahooStockLineChartService.getYahooStockChart(quote.symbol, '2009-09-11', '2010-03-10').then(handleThen);
                     }

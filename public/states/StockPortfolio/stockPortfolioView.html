@@ -1,45 +1,105 @@
-<div style="margin-top: 60px;">Stock Portfolio</div>
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Open+Sans:700,300);
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f0f0f0;
+    }
+    .container {
+        width: 640px;
+        padding: 5px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .stock {
+        width: 150px;
+        height: 150px;
+        background-color: #CCC;
+        position: relative;
+        float: left;
+        margin: 5px;
+        transition: box-shadow 0.2s ease;
+    }
+    .stock:hover {
+        box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.15);
+    }
+    .stock .symbol,
+    .stock .change {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #fff;
+    }
+    .stock .symbol {
+        top: 10px;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 300;
+    }
+    .stock .change {
+        top: 50%;
+        font-size: 22px;
+        font-weight: 700;
+        transform: translateY(-50%);
+    }
 
-<div class="container">
 
-    <div class="stock" id="stock-1">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
+
+</style>
+
+<div class="portfolio">
+    <div style="margin-top: 60px;">Stock Portfolio</div>
+
+    <div class="container">
+
+        <div class="stock" id="stock-1">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-2">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-3">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-4">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-5">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-6">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-7">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
+        <div class="stock" id="stock-8">
+            <span class="symbol">unknown</span>
+            <span class="change">0.00%</span>
+        </div>
+
     </div>
-
-    <div class="stock" id="stock-2">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-3">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-4">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-5">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-6">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-7">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
-    <div class="stock" id="stock-8">
-        <span class="symbol">unknown</span>
-        <span class="change">0.00%</span>
-    </div>
-
 </div>
