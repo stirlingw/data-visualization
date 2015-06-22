@@ -2,7 +2,7 @@ visualization.directive('googleStockQuoteDirective',['$http', 'GoogleStockQuoteS
     'use strict';
     return {
         restrict: 'E',
-        templateUrl: './components/GoogleStockQuote/googleStockQuoteView.html',
+        templateUrl: './components/GoogleStockQuote/GoogleStockQuoteView.html',
         scope: true,
         replace: true,
         link: function (scope, element, attrs) {
