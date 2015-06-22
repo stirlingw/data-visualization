@@ -1,3 +1,12 @@
+<style>
+    .neg {
+        color: #DC0A0A;
+    }
+    .pos {
+        color: #458d37;
+    }
+</style>
+
 <!-- Start Page Header -->
 <div class="page-header" style="margin-top: 60px;">
     <h1>Stock Portfolio</h1>
@@ -49,18 +58,24 @@
                 <td>{{s.purchased_value | currency}}</td>
                 <td>{{s.current_value | currency}}</td>
                 <td>{{s.shares | number}}</td>
-                <td>{{s.current_value * s.shares - s.purchased_value * s.shares | currency}}</td>
-                <td>{{s.shares * 100  / stocks.shareSum  }}%</td>
+                <td ng-class="{'neg': s.spv.toString().includes('-') == true, 'pos': s.spv.toString().includes('-') !== true }">{{s.spv | currency}}</td>
+                <td>{{s.sp}}%</td>
                 <td class="col-xs-2">
                     <button class="btn btn-danger btn-sm" type="button" ng-click="removePerson($index)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                 </td>
             </tr>
             <tr><td colspan="4" ng-show='stocks.stocks.length == 0'>No people listed...</td></tr>
             <tr><td colspan="4" ng-show='stocks.stocks == undefined'>Loading...</td></tr>
+            <tr>
+                <td colspan="5"></td>
+                <td style=" border-top: 4px solid black;"><strong>{{stocks.shareSum | number}}</strong></td>
+                <td style=" border-top: 4px solid black;" ng-class="{'neg': stocks.spvSum.toString().includes('-') == true, 'pos': stocks.spvSum.toString().includes('-') !== true }"><strong>{{stocks.spvSum | currency }}</strong></td>
+                <td colspan="2"></td>
+            </tr>
         </table>
         <table>
             <tr>
-                <td>Legend - PV: Purchased Value, CV: Current Value, SPV: Stock Portfolio Value, SP%: Stock Portfolio %</td>
+                <td>Legends - PV: Purchased Value, CV: Current Value, SPV: Stock Portfolio Value, SP%: Stock Portfolio %</td>
             </tr>
         </table>
     </div>

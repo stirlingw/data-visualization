@@ -190,7 +190,14 @@
         <div class="col-lg-10 col-lg-offset-0 col-md-10 col-md-offset-1">
             <div class="col-xs-12">
                 <div class="well">
-                    <input type="text" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="stock.selected" placeholder="Type in a stock" typeahead="label as label.label for label in getStock($viewValue)" typeahead-loading="loadingStocks" class="form-control" typeahead-editable="false" typeahead-on-select='selectedStock($model)' >
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" disabled>
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div><!-- /input-group -->
                     <i ng-show="loadingStocks" class="glyphicon glyphicon-refresh"></i>
                 </div>
             </div>
