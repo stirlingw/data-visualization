@@ -6,9 +6,14 @@
     "angular": "latest",
     "angular-animate": "latest",
     "angular-route": "latest",
-    "font-awesome": "latest",
-    "d3": "latest",
+    "angular-ui-bootstrap-bower": "latest",
+    "bootstrap": "latest",
     "crossfilter": "latest",
-    "angular-ui-bootstrap-bower": "latest"
+    "d3": "latest",
+    "font-awesome": "latest",
+    "jquery": "latest",
+    "lodash": "latest",
+    "moment": "latest",
+    "ui-router": "latest"
   }
 }

@@ -4,7 +4,6 @@ visualization.service('WikiSummaryService', ['$http',
         var Service = {};
 
         Service.getWikiSummary = function(name){
-            console.log(name)
             var replacedName = name.replace(/[^\w\s]/gi, '');
             var removeInc = replacedName.replace('Inc','');
             var summaryName = encodeURIComponent(removeInc.trim());

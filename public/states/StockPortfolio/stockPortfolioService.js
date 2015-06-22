@@ -60,6 +60,32 @@ visualization.service('StockPortfolioService', ['$http','$q',
             return stockPortfolio;
         };
 
+        Service.saveStock = function(stocks, stock) {
+            stockPortfolio = stocks;
+            stockPortfolio.stocks.push(stock);
+            stockPortfolio.shareSum = shareSum();
+            stockPortfolio.stocks.forEach(function(stock){
+                stock.spv = stock.current_value * stock.shares - stock.purchased_value * stock.shares;
+                stock.sp  = stock.shares * 100  / stockPortfolio.shareSum;
+            });
+            stockPortfolio.spvSum = spvSum();
+
+            return stockPortfolio;
+        };
+
+        Service.removeStock = function(stocks, stock, index) {
+            stockPortfolio = stocks;
+            stockPortfolio.stocks.splice(index,1);
+            stockPortfolio.shareSum = shareSum();
+            stockPortfolio.stocks.forEach(function(stock){
+                stock.spv = stock.current_value * stock.shares - stock.purchased_value * stock.shares;
+                stock.sp  = stock.shares * 100  / stockPortfolio.shareSum;
+            });
+            stockPortfolio.spvSum = spvSum();
+
+            return stockPortfolio;
+        };
+
         return Service;
     }
 ]);

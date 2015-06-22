@@ -1,36 +1,76 @@
-visualization.controller('StockPortfolioController', ['$scope', '$rootScope', 'StockPortfolioService', '$http',
-    function($scope, $rootScope, StockPortfolioService,   $http) {
+visualization.controller('StockPortfolioController', ['$scope', '$rootScope', 'StockPortfolioService', 'YahooStockQuoteService', '$http',
+    function($scope, $rootScope, StockPortfolioService, YahooStockQuoteService, $http) {
         'use strict';
         //Google Stock Quote
         $scope.GSQ = null;
         $scope.YSQ = null;
         $scope.YSN = null;
         $scope.symbolQuote = null;
+        $scope.modalError = null;
 
+        //still to implement (maybe)
         //http://codepen.io/alexerlandsson/pen/YXXzLR
 
-        var stocks = ['NVDA', 'EBAY', 'INTC', 'APPL', 'MSFT', 'GOOG', 'FB', 'TWTR', 'RUBI', 'BAC', 'F'];
-        var stocksUrl = stocks.join('%20');
+        $scope.stockInfo = undefined;
 
-        var url = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22' + stocksUrl + '%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
-
-        $.getJSON(url, function(data) {
-            for (var i = 0; i < data.query.results.quote.length; i++) {
-                var stockId = '#stock-' + (i + 1);
-                var change = data.query.results.quote[i].ChangeinPercent;
-
-                if (change.slice(0,-1) < 0) {
-                    $(stockId).css('background-color', '#db5959');
-                }  else if (change.slice(0,-1) > 0) {
-                    $(stockId).css('background-color', '#68b665');
-                } else if (change.slice(0,-1) == 0) {
-                    $(stockId).css('background-color', '#fdca41');
+        var Stocks = [];
+        $scope.getStock = function(val) {
+            var url = [
+                "http://d.yimg.com/autoc.finance.yahoo.com/autoc?",
+                "query=" + val,
+                "&callback=YAHOO.Finance.SymbolSuggest.ssCallback"];
+            var YAHOO = window.YAHOO = {Finance: {SymbolSuggest: {}}};
+            YAHOO.Finance.SymbolSuggest.ssCallback = function(response) {
+                function returnMap(item) {
+                    return {
+                        label: item.name + " - " + item.symbol + " (" + item.exchDisp + ")",
+                        name: item.name,
+                        symbol: item.symbol,
+                        exchange: item.exch
+                    };
                 }
+                Stocks = response.ResultSet.Result.map(returnMap);
+            };
+            $http.jsonp(url.join(""));
 
-                $(stockId).children('.symbol').html(data.query.results.quote[i].symbol);
-                $(stockId).children('.change').html(change);
+            return Stocks;
+        };
+
+        $scope.selectedStock = function(model){
+            //$scope.stockInfo = model;
+            YahooStockQuoteService.getYahooStockQuote(model.symbol)
+                .then(function(data){
+                    var stock = data.data.query.results.quote;
+                    $scope.stockInfo = {
+                        name: stock.Name,
+                        symbol: stock.Symbol,
+                        exchange: stock.StockExchange,
+                        purchased_value: stock.LastTradePriceOnly,
+                        current_value: stock.LastTradePriceOnly,
+                        shares: 0
+                    };
+                });
+        };
+
+        $scope.submitForm = function () {
+            if($scope.stockInfo == undefined) {
+                $scope.modalError = "You must choose a stock & add shares before adding a stock"
+            }else if($scope.stocks.shareSum + $scope.stockInfo.shares >= 100000 && $scope.stocks.stocks.length <= 25 ) {
+                $scope.modalError = null;
+                $scope.stocks = StockPortfolioService.saveStock($scope.stocks, $scope.stockInfo);
+                $('#myModal').modal('toggle');
+                $scope.stockInfo = {};
+                $scope.stock = {};
+            }else if($scope.stocks.shareSum + $scope.stockInfo.shares < 100000){
+                $scope.modalError = "Number of total shares allowed will be exceeded with this action."
+            }else if($scope.stocks.stocks > 25) {
+                $scope.modalError = "Number of total stocks allowed will be exceeded with this action."
             }
-        });
+        };
+
+        $scope.removeStock = function (stock, index) {
+            $scope.stocks = StockPortfolioService.removeStock($scope.stocks, stock, index);
+        }
 
         $scope.stocks = StockPortfolioService.getStockPortfolio();
     }
